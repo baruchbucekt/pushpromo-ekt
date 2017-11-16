@@ -3,6 +3,19 @@
 var React = require('react');
 var $ = require('jquery');
 var socket = io.connect();
+var key = "iavila@elektra.com.mx";
+var token = "Gruposalinas327767";
+$.ajaxSetup({
+  async: true,
+	crossDomain: true,
+	headers: {
+		"accept": "application/vnd.vtex.ds.v10+json",
+		"content-type": "application/json",
+		"x-vtex-api-appKey": key,
+		"x-vtex-api-appToken": token,
+    "REST-Range": "resources=0-100"
+	}
+});
 
 var PushProductApp = React.createClass({
 	componentDidMount() {
@@ -16,38 +29,54 @@ var PushProductApp = React.createClass({
 			sku: document.getElementById('skuEl').value
 		};
 		socket.emit('send:product', JSON.stringify(promoProduct));
+		savePromo();
+	},
+	savePromo() {
 		$.ajax({
       method: 'GET',
-      url: "http://api.vtex.com/elektra/dataentities/OR/search/?_fields=id,sku,last",
+      url: "https://api.vtex.com/elektra/dataentities/OR/search/?_fields=id,sku,last",
+			error: function() {
+			var dataP = {
+				sku: document.getElementById('skuEl').value,
+				last: true
+			}
+
+			$.ajax({
+				method: 'PATCH',
+				url: "https://api.vtex.com/elektra/dataentities/OR/documents/",
+				data: JSON.stringify(dataP),
+				success: function(data, textStatus, xhr){
+				}
+			});
+			},
       success: function(data, textStatus, xhr){
         if (data.length == 0) {
-					var data = {
+					var dataP = {
 						sku: document.getElementById('skuEl').value,
 						last: true
 					}
 
 					$.ajax({
 						method: 'PATCH',
-						url: "http://api.vtex.com/elektra/dataentities/OR/documents/",
-						data: JSON.stringify(data),
+						url: "https://api.vtex.com/elektra/dataentities/OR/documents/",
+						data: JSON.stringify(dataP),
 						success: function(data, textStatus, xhr){
 						}
 					});
         } else {
-					var data = {
+					var dataP = {
 						sku: document.getElementById('skuEl').value,
 						last: true
 					}
 					$.ajax({
 						method: 'PUT',
-						url: "http://api.vtex.com/elektra/dataentities/OR/documents/" + action.id,
-						data: JSON.stringify(data),
+						url: "https://api.vtex.com/elektra/dataentities/OR/documents/" + data[0].id,
+						data: JSON.stringify(dataP),
 						processData: false,
 						success: function(data){
 						}
 					});
         }
-        AppStore.emitChange();
       }
     });
 	},
