@@ -1,19 +1,31 @@
-body{
-	width: 600px;
-	margin: 0 auto;
-	border: 5px solid tomato;
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	margin: 0;
+	outline: none;
+	padding: 0;
+	text-decoration: none;
+	font-family: 'Roboto', sans-serif;
 }
-.users{
-	float : right;
-	margin-right: 1.5em;
+body {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	background-color: white;
 }
-.messages {
-	width: 400px;
-	margin: 1em;
-	border : 1px solid black;
-	padding: 1em;
+h1 {
+	font-weight: 600;
+	color: #CA2D2B;
+	text-align: center;
 }
-.message_form,
-.change_name_form{
-	padding: 1em;
+#header {
+	z-index: 9999;
+	height: 60px;
+	padding: 15px;
+	background-color: white;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
