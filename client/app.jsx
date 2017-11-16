@@ -29,7 +29,7 @@ var PushProductApp = React.createClass({
 			sku: document.getElementById('skuEl').value
 		};
 		socket.emit('send:product', JSON.stringify(promoProduct));
-		savePromo();
+		this.savePromo();
 	},
 	savePromo() {
 		$.ajax({
