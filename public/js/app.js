@@ -32,9 +32,7 @@ var PushProductApp = React.createClass({
 			sku: document.getElementById('skuEl').value
 		};
 		socket.emit('send:product', JSON.stringify(promoProduct));
-		savePromo();
-	},
-	savePromo: function savePromo() {
+
 		$.ajax({
 			method: 'GET',
 			url: "https://api.vtex.com/elektra/dataentities/OR/search/?_fields=id,sku,last",
